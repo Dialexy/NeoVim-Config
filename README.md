@@ -1,16 +1,15 @@
 # NeoVim Configuration
 
-A modern, feature-rich NeoVim configuration built with [lazy.nvim](https://github.com/folke/lazy.nvim) plugin manager.
+NeoVim configuration built with [lazy.nvim](https://github.com/folke/lazy.nvim) plugin manager.
 
 ## Features
 
 - **Plugin Manager**: [lazy.nvim](https://github.com/folke/lazy.nvim) for fast and efficient plugin management
-- **Colorscheme**: Catppuccin Mocha with transparent background
+- **Colorscheme**: Catppuccin Mocha (Defualt) [can be changed by setting lazy loading priority[
 - **LSP Support**: Full Language Server Protocol integration with auto-completion
-- **Modern UI**: Beautiful interface with statusline, bufferline, and notifications
-- **File Navigation**: Neo-tree and Telescope for efficient file management
+- **File Navigation**: Neo-tree and Telescope file management
 - **Git Integration**: Built-in git commands and visual indicators
-- **Syntax Highlighting**: Treesitter for advanced syntax highlighting
+- **Syntax Highlighting**: Treesittersyntax highlighting
 
 ## Requirements
 
@@ -123,7 +122,7 @@ Leader key: `Space`
 
 ### Options (lua/config/options.lua)
 - **Leader key**: Space
-- **Indentation**: 4 spaces (expandtab)
+- **Indentation**: 4 spaces 
 - **Line numbers**: Enabled
 - **Mouse**: Disabled
 - **Shell**: zsh
@@ -131,9 +130,8 @@ Leader key: `Space`
 
 ### Colorscheme
 - **Active**: Catppuccin Mocha
-- **Transparent background**: Enabled
+- **Transparent background**: Enabled (for catppuccin)
 - **Italic comments**: Enabled
-- **Also available**: Solarized Osaka
 
 ## Customization
 
