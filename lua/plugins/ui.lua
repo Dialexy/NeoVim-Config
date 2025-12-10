@@ -121,7 +121,7 @@ return {
 					-- Use mini.icons instead of nvim-web-devicons
 					local icon, hl = MiniIcons.get("file", filename)
 					local icon_color = vim.fn.synIDattr(vim.fn.hlID(hl), "fg")
-					
+
 					return { { icon, guifg = icon_color }, { " " }, { filename } }
 				end,
 			})

@@ -12,6 +12,7 @@ return {
 				"tailwindcss-language-server",
 				"typescript-language-server",
 				"css-lsp",
+				"clangd",
 			})
 		end,
 	},
@@ -21,27 +22,16 @@ return {
 		"neovim/nvim-lspconfig",
 		opts = {
 			inlay_hints = { enabled = false },
-			-- Enable diagnostics
-			diagnostics = {
-				underline = true,
-				update_in_insert = false,
-				virtual_text = {
-					spacing = 4,
-					source = "if_many",
-					prefix = "●",
-				},
-				severity_sort = true,
-				signs = true,
-			},
 			---@type lspconfig.options
 			servers = {
+				clangd = {}, -- Enable clangd for C++
 				cssls = {},
 				tailwindcss = {
 					root_dir = function(...)
 						return require("lspconfig.util").root_pattern(".git")(...)
 					end,
 				},
-				ts_ls = {
+				tsserver = {
 					root_dir = function(...)
 						return require("lspconfig.util").root_pattern(".git")(...)
 					end,
@@ -80,7 +70,6 @@ return {
 					},
 				},
 				lua_ls = {
-					-- enabled = false,
 					single_file_support = true,
 					settings = {
 						Lua = {
@@ -92,9 +81,7 @@ return {
 								callSnippet = "Both",
 							},
 							misc = {
-								parameters = {
-									-- "--log-level=trace",
-								},
+								parameters = {},
 							},
 							hint = {
 								enable = true,
@@ -112,7 +99,6 @@ return {
 							},
 							diagnostics = {
 								disable = { "incomplete-signature-doc", "trailing-space" },
-								-- enable = false,
 								groupSeverity = {
 									strong = "Warning",
 									strict = "Warning",
@@ -156,7 +142,6 @@ return {
 				{
 					"gd",
 					function()
-						-- DO NOT RESUSE WINDOW
 						require("telescope.builtin").lsp_definitions({ reuse_win = false })
 					end,
 					desc = "Goto Definition",
