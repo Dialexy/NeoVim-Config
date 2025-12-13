@@ -1,5 +1,22 @@
 return {
 	{
+		"folke/tokyonight.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {
+			style = "night", -- storm, moon, night, or day
+			transparent = true,
+			styles = {
+				sidebars = "transparent",
+				floats = "transparent",
+			},
+		},
+		config = function(_, opts)
+			require("tokyonight").setup(opts)
+			vim.cmd.colorscheme("tokyonight")
+		end,
+	},
+	{
 		"craftzdog/solarized-osaka.nvim",
 		lazy = true,
 		priority = 900,
@@ -12,8 +29,8 @@ return {
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
-		lazy = false,
-		priority = 1000,
+		lazy = true,
+		priority = 800,
 		opts = {
 			flavour = "mocha",
 			transparent_background = true,
@@ -48,9 +65,5 @@ return {
 				blink_cmp = true,
 			},
 		},
-		config = function(_, opts)
-			require("catppuccin").setup(opts)
-			vim.cmd.colorscheme("catppuccin")
-		end,
 	},
 }

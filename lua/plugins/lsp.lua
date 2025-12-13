@@ -13,6 +13,8 @@ return {
 				"typescript-language-server",
 				"css-lsp",
 				"clangd",
+                                "cmake-language-server",
+                                "cmakelang",
 			})
 		end,
 	},
