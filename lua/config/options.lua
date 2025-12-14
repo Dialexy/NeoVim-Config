@@ -61,3 +61,16 @@ vim.g.lazyvim_cmp = "blink.cmp"
 
 -- Disable auto-formatting on save (use <leader>cf to format manually)
 vim.g.autoformat = false
+
+-- Force enable diagnostics (backup method)
+vim.diagnostic.config({
+  virtual_text = {
+    spacing = 4,
+    source = "if_many",
+    prefix = "●",
+  },
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+})

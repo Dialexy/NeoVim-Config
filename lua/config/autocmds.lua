@@ -35,3 +35,24 @@ autosave_timer:start(
 		end
 	end)
 )
+
+-- Ensure diagnostics are enabled when LSP attaches
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client then
+      -- Force enable diagnostics
+      vim.diagnostic.config({
+        virtual_text = {
+          spacing = 4,
+          source = "if_many",
+          prefix = "●",
+        },
+        signs = true,
+        underline = true,
+        update_in_insert = false,
+        severity_sort = true,
+      })
+    end
+  end,
+})

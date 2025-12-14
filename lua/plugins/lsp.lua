@@ -21,7 +21,33 @@ return {
         -- lsp servers
         {
                 "neovim/nvim-lspconfig",
+                init = function()
+                        -- Force enable diagnostics on LSP config init
+                        vim.diagnostic.config({
+                                virtual_text = {
+                                        spacing = 4,
+                                        source = "if_many",
+                                        prefix = "●",
+                                },
+                                signs = true,
+                                underline = true,
+                                update_in_insert = false,
+                                severity_sort = true,
+                        })
+                end,
                 opts = {
+                        -- Enable diagnostics in LSP opts
+                        diagnostics = {
+                                underline = true,
+                                update_in_insert = false,
+                                virtual_text = {
+                                        spacing = 4,
+                                        source = "if_many",
+                                        prefix = "●",
+                                },
+                                severity_sort = true,
+                                signs = true,
+                        },
                         inlay_hints = { enabled = false },
                         servers = {
                                 clangd = {
