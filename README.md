@@ -60,7 +60,6 @@ NeoVim configuration built with [lazy.nvim](https://github.com/folke/lazy.nvim) 
     │   ├── editor.lua       # Editor enhancements
     │   ├── lsp.lua          # LSP configuration
     │   ├── neo-tree.lua     # File explorer
-    │   ├── tiny-inline-diagnostic.lua
     │   ├── treesitter.lua   # Syntax highlighting
     │   └── ui.lua           # UI plugins
     └── util/
@@ -99,7 +98,7 @@ NeoVim configuration built with [lazy.nvim](https://github.com/folke/lazy.nvim) 
 - **dial.nvim** - Enhanced increment/decrement
 
 ### LSP & Diagnostics
-- **tiny-inline-diagnostic.nvim** - Inline diagnostics
+- **LazyVim-LSP-intergration** - Inline diagnostics
 - **render-markdown.nvim** - Markdown rendering
 
 ## Key Mappings
@@ -129,7 +128,7 @@ Leader key: `Space`
 - **Auto-formatting**: Disabled by default (use `<leader>cf` to format manually)
 
 ### Colorscheme
-- **Active**: Catppuccin Mocha
+- **Active**: Tokyonight
 - **Transparent background**: Enabled (for catppuccin)
 - **Italic comments**: Enabled
 
