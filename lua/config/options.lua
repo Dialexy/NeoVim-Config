@@ -57,7 +57,6 @@ vim.g.lazyvim_prettier_needs_config = true
 vim.g.lazyvim_picker = "telescope"
 vim.g.lazyvim_cmp = "blink.cmp"
 
--- Timer-based autosave removed from here (moved to autocmds.lua)
 
 -- Disable auto-formatting on save (use <leader>cf to format manually)
 vim.g.autoformat = false
