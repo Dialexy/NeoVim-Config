@@ -148,19 +148,6 @@ return {
 	},
 
 	{
-		"folke/zen-mode.nvim",
-		cmd = "ZenMode",
-		opts = {
-			plugins = {
-				gitsigns = true,
-				tmux = true,
-				kitty = { enabled = false, font = "+2" },
-			},
-		},
-		keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
-	},
-
-	{
 		"MeanderingProgrammer/render-markdown.nvim",
 		enabled = false,
 	},
@@ -179,8 +166,7 @@ return {
             ╚═╝   ╚══════╝╚══════╝╚══════╝╚═╝╚═╝  ╚═╝
     ]],
 					keys = {
-						{ icon = " ", key = "s", desc = "Restore Buffer", action = ":lua require('persistence').load()"},
-						{ icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})"}
+						{ icon = " ", key = "s", desc = "Restore Buffer", action = ":lua require('persistence').load()"}
 					},
 				},
 				sections = {

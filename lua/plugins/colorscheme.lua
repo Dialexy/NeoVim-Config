@@ -16,6 +16,7 @@ return {
 			vim.cmd.colorscheme("tokyonight")
 		end,
 	},
+
 	{
 		"craftzdog/solarized-osaka.nvim",
 		lazy = true,
@@ -26,6 +27,7 @@ return {
 			}
 		end,
 	},
+
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
