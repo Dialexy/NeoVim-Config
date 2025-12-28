@@ -139,7 +139,7 @@ return {
 					relative = "cwd",
 					modified_hl = "MatchParen",
 					directory_hl = "",
-					filename_hl = "Bold",
+					afilename_hl = "Bold",
 					modified_sign = "",
 					readonly_icon = " 󰌾 ",
 				}),
