@@ -2,7 +2,7 @@ if vim.loader then
         vim.loader.enable()
 end
 
--- FORCE ENABLE DIAGNOSTICS IMMEDIATELY
+--  force diagnostics
 vim.diagnostic.config({
   virtual_text = true,
   signs = true,
