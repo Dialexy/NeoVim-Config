@@ -1,8 +1,8 @@
 return {
 	{
 		"folke/tokyonight.nvim",
-		lazy = false,
-		priority = 1000,
+		lazy = true,
+		priority = 900,
 		opts = {
 			style = "night", -- storm, moon, night, or day
 			transparent = true,
@@ -20,11 +20,38 @@ return {
 	{
 		"craftzdog/solarized-osaka.nvim",
 		lazy = true,
-		priority = 900,
+		priority = 800,
 		opts = function()
 			return {
 				transparent = true,
 			}
+		end,
+	},
+
+	{
+		"nyoom-engineering/oxocarbon.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			vim.cmd.colorscheme("oxocarbon")
+
+			local function set_transparency()
+				vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+				vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+				vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+
+                vim.api.nvim_set_hl(0, "LineNr", { bg = "none" })
+                vim.api.nvim_set_hl(0, "CursorLineNr", { bg = "none" })
+                vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
+                vim.api.nvim_set_hl(0, "FoldColumn", { bg = "none" })
+			end
+
+			set_transparency()
+
+			vim.api.nvim_create_autocmd("ColorScheme", {
+				pattern = "oxocarbon",
+				callback = set_transparency,
+			})
 		end,
 	},
 
