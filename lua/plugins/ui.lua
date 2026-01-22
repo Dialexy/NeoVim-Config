@@ -113,16 +113,39 @@ return {
 					cursorline = true,
 				},
 				render = function(props)
-					local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
-					if vim.bo[props.buf].modified then
-						filename = "[+] " .. filename
+					-- Wrap entire render in pcall to catch any errors
+					local ok, result = pcall(function()
+						local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+						if filename == "" then
+							filename = "[No Name]"
+						end
+						if vim.bo[props.buf].modified then
+							filename = "[+] " .. filename
+						end
+
+						-- Use mini.icons with error handling
+						local icon_ok, icon, hl = pcall(MiniIcons.get, "file", filename)
+						if not icon_ok or not icon then
+							return { { filename } }
+						end
+
+						local icon_color = "#c0caf5" -- default color
+						if hl then
+							local color_ok, color = pcall(vim.fn.synIDattr, vim.fn.hlID(hl), "fg")
+							if color_ok and color and color ~= "" then
+								icon_color = color
+							end
+						end
+
+						return { { icon, guifg = icon_color }, { " " }, { filename } }
+					end)
+
+					if ok then
+						return result
+					else
+						-- Fallback: just show buffer number on error
+						return { { "buf:" .. props.buf } }
 					end
-
-					-- Use mini.icons instead of nvim-web-devicons
-					local icon, hl = MiniIcons.get("file", filename)
-					local icon_color = vim.fn.synIDattr(vim.fn.hlID(hl), "fg")
-
-					return { { icon, guifg = icon_color }, { " " }, { filename } }
 				end,
 			})
 		end,
