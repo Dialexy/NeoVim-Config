@@ -1,5 +1,5 @@
 return {
-	-- messages, cmdline and the popupmenu
+	-- messages, cmdline and the popupmenu.
 	{
 		"folke/noice.nvim",
 		opts = function(_, opts)
@@ -61,30 +61,30 @@ return {
 	},
 
 	{
-                "snacks.nvim",
-                opts = {
-                        scroll = { enabled = false },
-                        terminal = {
-                                win = {
-                                        position = "float",
-                                        width = 0.9,
-                                        height = 0.9,
-                                        row = 0.05,
-                                        col = 0.075,
-                                        border = "none",
-                                },
-                        },
-                },
-                keys = {
-                        {
-                                "<leader>ft",
-                                function()
-                                        Snacks.terminal.toggle()
-                                end,
-                                desc = "Toggle Terminal",
-                        },
-                },
-        },
+		"snacks.nvim",
+		opts = {
+			scroll = { enabled = false },
+			terminal = {
+				win = {
+					position = "float",
+					width = 0.9,
+					height = 0.9,
+					row = 0.05,
+					col = 0.075,
+					border = "none",
+				},
+			},
+		},
+		keys = {
+			{
+				"<leader>ft",
+				function()
+					Snacks.terminal.toggle()
+				end,
+				desc = "Toggle Terminal",
+			},
+		},
+	},
 
 	-- buffer line
 	{
