@@ -61,19 +61,30 @@ return {
 	},
 
 	{
-		"snacks.nvim",
-		opts = {
-			scroll = { enabled = false },
-			terminal = {
-				win = {
-					position = "float",
-					width = 0.8,
-					height = 0.8,
-					border = "rounded",
-				},
-			},
-		},
-	},
+                "snacks.nvim",
+                opts = {
+                        scroll = { enabled = false },
+                        terminal = {
+                                win = {
+                                        position = "float",
+                                        width = 0.9,
+                                        height = 0.9,
+                                        row = 0.05,
+                                        col = 0.065,
+                                        border = "none",
+                                },
+                        },
+                },
+                keys = {
+                        {
+                                "<leader>ft",
+                                function()
+                                        Snacks.terminal.toggle()
+                                end,
+                                desc = "Toggle Terminal",
+                        },
+                },
+        },
 
 	-- buffer line
 	{
