@@ -70,7 +70,7 @@ return {
                                         width = 0.9,
                                         height = 0.9,
                                         row = 0.05,
-                                        col = 0.065,
+                                        col = 0.075,
                                         border = "none",
                                 },
                         },
