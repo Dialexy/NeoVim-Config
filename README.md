@@ -71,7 +71,8 @@ NeoVim configuration built with [lazy.nvim](https://github.com/folke/lazy.nvim) 
 │   │   └── ui.lua
 │   └── util
 │       └── debug.lua
-└── README.md```
+└── README.md
+```
 
 ## Key Plugins
 
