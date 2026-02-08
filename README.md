@@ -41,30 +41,37 @@ NeoVim configuration built with [lazy.nvim](https://github.com/folke/lazy.nvim) 
 
 ```
 .
-├── init.lua                  # Entry point
-├── lazy-lock.json           # Plugin version lock file
-├── lazyvim.json             # LazyVim configuration
-└── lua/
-    ├── config/
-    │   ├── autocmds.lua     # Auto commands
-    │   ├── keymaps.lua      # Key mappings
-    │   ├── lazy.lua         # Lazy.nvim bootstrap
-    │   └── options.lua      # Vim options
-    ├── craftzdog/
-    │   ├── discipline.lua   # Cowboy mode
-    │   ├── hsl.lua          # Color utilities
-    │   └── lsp.lua          # LSP utilities
-    ├── plugins/
-    │   ├── coding.lua       # Coding plugins (blink.cmp, etc.)
-    │   ├── colorscheme.lua  # Color themes
-    │   ├── editor.lua       # Editor enhancements
-    │   ├── lsp.lua          # LSP configuration
-    │   ├── neo-tree.lua     # File explorer
-    │   ├── treesitter.lua   # Syntax highlighting
-    │   └── ui.lua           # UI plugins
-    └── util/
-        └── debug.lua        # Debug utilities
-```
+├── init.lua
+├── lazy-lock.json
+├── lazyvim.json
+├── lua
+│   ├── config
+│   │  ├── autocmds.lua
+│   │  ├── keymaps.lua
+│   │  ├── lazy.lua
+│   │  └── options.lua
+│   ├── craftzdog
+│   │   ├── hsl.lua
+│   │   └── lsp.lua
+│   ├── plugins
+│   │   ├── cmake.lua
+│   │   ├── coding.lua
+│   │   ├── colorscheme.lua
+│   │   ├── diagnostics.lua
+│   │   ├── editor.lua
+│   │   ├── gitsigns.lua
+│   │   ├── harpoon.lua
+│   │   ├── leetcode.lua
+│   │   ├── lsp.lua
+│   │   ├── neo-tree.lua
+│   │   ├── performance.lua
+│   │   ├── python.lua
+│   │   ├── rust.lua
+│   │   ├── treesitter.lua
+│   │   └── ui.lua
+│   └── util
+│       └── debug.lua
+└── README.md```
 
 ## Key Plugins
 
