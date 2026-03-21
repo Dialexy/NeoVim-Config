@@ -5,7 +5,7 @@ NeoVim configuration built with [lazy.nvim](https://github.com/folke/lazy.nvim) 
 ## Features
 
 - **Plugin Manager**: [lazy.nvim](https://github.com/folke/lazy.nvim) for fast and efficient plugin management
-- **Colorscheme**: Catppuccin Mocha (Defualt) [can be changed by setting lazy loading priority[
+- **Colorscheme**: Oxocarbon (active), with Tokyonight, Catppuccin, and Solarized Osaka available (change by adjusting lazy loading priority)
 - **LSP Support**: Full Language Server Protocol integration with auto-completion
 - **File Navigation**: Neo-tree and Telescope file management
 - **Git Integration**: Built-in git commands and visual indicators
@@ -136,8 +136,8 @@ Leader key: `Space`
 - **Auto-formatting**: Disabled by default (use `<leader>cf` to format manually)
 
 ### Colorscheme
-- **Active**: Tokyonight
-- **Transparent background**: Enabled (for catppuccin)
+- **Active**: Oxocarbon
+- **Transparent background**: Enabled
 - **Italic comments**: Enabled
 
 ## Customization
