@@ -78,7 +78,7 @@ function M.hslToRgb(h, s, l)
 	if s == 0 then
 		r, g, b = l, l, l -- achromatic
 	else
-		function hue2rgb(p, q, t)
+		local function hue2rgb(p, q, t)
 			if t < 0 then
 				t = t + 1
 			end
@@ -114,7 +114,6 @@ function M.hslToRgb(h, s, l)
 end
 
 function M.hexToHSL(hex)
-	local hsluv = require("solarized-osaka.hsluv")
 	local rgb = M.hex_to_rgb(hex)
 	local h, s, l = M.rgbToHsl(rgb[1], rgb[2], rgb[3])
 

@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Timer-based autosave (saves every 2 seconds when buffer is modified)
-local autosave_timer = vim.loop.new_timer()
+local autosave_timer = vim.uv.new_timer()
 autosave_timer:start(
 	2000,
 	2000,
@@ -23,10 +23,10 @@ autosave_timer:start(
 			-- Check if buffer is loaded, modified, has a name, and is not readonly
 			if
 				vim.api.nvim_buf_is_loaded(buf)
-				and vim.api.nvim_buf_get_option(buf, "modified")
+				and vim.api.nvim_get_option_value("modified", { buf = buf })
 				and vim.api.nvim_buf_get_name(buf) ~= ""
-				and not vim.api.nvim_buf_get_option(buf, "readonly")
-				and vim.api.nvim_buf_get_option(buf, "buftype") == ""
+				and not vim.api.nvim_get_option_value("readonly", { buf = buf })
+				and vim.api.nvim_get_option_value("buftype", { buf = buf }) == ""
 			then
 				vim.api.nvim_buf_call(buf, function()
 					vim.cmd("silent! write")
@@ -35,24 +35,3 @@ autosave_timer:start(
 		end
 	end)
 )
-
--- Ensure diagnostics are enabled when LSP attaches
-vim.api.nvim_create_autocmd("LspAttach", {
-	callback = function(args)
-		local client = vim.lsp.get_client_by_id(args.data.client_id)
-		if client then
-			-- Force enable diagnostics
-			vim.diagnostic.config({
-				virtual_text = {
-					spacing = 4,
-					source = "if_many",
-					prefix = "●",
-				},
-				signs = true,
-				underline = true,
-				update_in_insert = false,
-				severity_sort = true,
-			})
-		end
-	end,
-})

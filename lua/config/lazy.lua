@@ -1,5 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
 	vim.fn.system({
 		"git",
 		"clone",
@@ -40,7 +40,7 @@ require("lazy").setup({
 	dev = {
 		path = "~/.ghq/github.com",
 	},
-	checker = { enabled = true },
+	checker = { enabled = false },
 	performance = {
 		cache = {
 			enabled = true,
