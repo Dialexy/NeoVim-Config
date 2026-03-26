@@ -26,6 +26,12 @@ keymap.set("n", "<leader>i", function()
 	require("craftzdog.lsp").toggleInlayHints()
 end)
 
+-- Claude Code
+keymap.set("n", "<leader>ai", function()
+	vim.cmd("terminal claude --continue")
+	vim.cmd("startinsert")
+end, { noremap = true, silent = true, desc = "Open Claude Code" })
+
 vim.api.nvim_create_user_command("ToggleAutoformat", function()
 	require("craftzdog.lsp").toggleAutoformat()
 end, {})
