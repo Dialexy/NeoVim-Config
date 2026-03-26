@@ -26,11 +26,13 @@ keymap.set("n", "<leader>i", function()
 	require("craftzdog.lsp").toggleInlayHints()
 end)
 
+-- Exit terminal mode with Esc (allows scrolling with j/k and trackpad)
+keymap.set("t", "<Esc>", "<C-\\><C-n>", opts)
+
 -- Claude Code
 keymap.set("n", "<leader>ai", function()
-	vim.cmd("terminal claude --continue")
-	vim.cmd("startinsert")
-end, { noremap = true, silent = true, desc = "Open Claude Code" })
+	Snacks.terminal.toggle("claude --continue 2>/dev/null || claude")
+end, { noremap = true, silent = true, desc = "Toggle Claude Code" })
 
 vim.api.nvim_create_user_command("ToggleAutoformat", function()
 	require("craftzdog.lsp").toggleAutoformat()
