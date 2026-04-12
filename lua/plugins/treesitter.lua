@@ -2,6 +2,27 @@ return {
 	{ "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },
 
 	{
+		-- Patch nvim-ts-autotag: newer Neovim returns nil instead of erroring
+		-- when no parser exists, so guard against a nil parser after pcall.
+		"windwp/nvim-ts-autotag",
+		opts = {},
+		config = function(_, opts)
+			require("nvim-ts-autotag").setup(opts)
+			local internal = require("nvim-ts-autotag.internal")
+			for _, fn_name in ipairs({ "close_tag", "close_slash_tag", "rename_tag" }) do
+				local orig = internal[fn_name]
+				internal[fn_name] = function()
+					local ok, parser = pcall(vim.treesitter.get_parser)
+					if not ok or not parser then
+						return
+					end
+					orig()
+				end
+			end
+		end,
+	},
+
+	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 		opts = {
