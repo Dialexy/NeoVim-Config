@@ -1,167 +1,60 @@
 return {
-	-- tools
 	{
 		"mason-org/mason.nvim",
-		opts = function(_, opts)
-			vim.list_extend(opts.ensure_installed, {
-				"stylua",
-				"selene",
-				"luacheck",
-				"shellcheck",
-				"shfmt",
-				"tailwindcss-language-server",
-				"typescript-language-server",
-				"css-lsp",
-				"clangd",
-				"cmakelang",
-			})
-		end,
+		opts = { ensure_installed = { "stylua", "shellcheck", "shfmt" } },
 	},
 
-	-- lsp servers
 	{
 		"neovim/nvim-lspconfig",
-		init = function()
-			-- Force enable diagnostics on LSP config init
-			vim.diagnostic.config({
-				virtual_text = {
-					spacing = 4,
-					source = "if_many",
-					prefix = "●",
-				},
-				signs = true,
-				underline = true,
-				update_in_insert = false,
-				severity_sort = true,
-			})
-		end,
 		opts = {
-			-- Enable diagnostics in LSP opts
-			diagnostics = {
-				underline = true,
-				update_in_insert = false,
-				virtual_text = {
-					spacing = 4,
-					source = "if_many",
-					prefix = "●",
-				},
-				severity_sort = true,
-				signs = true,
-			},
-			inlay_hints = { enabled = false },
+			inlay_hints = { enabled = false }, -- toggle with <leader>uh
 			servers = {
-				clangd = {
-					capabilities = {
-						offsetEncoding = { "utf-16" },
-					},
-				},
 				cssls = {},
-				tailwindcss = {
-					root_dir = function(...)
-						return require("lspconfig.util").root_pattern(".git")(...)
-					end,
-				},
-				tsserver = {
-					root_dir = function(...)
-						return require("lspconfig.util").root_pattern(".git")(...)
-					end,
-					single_file_support = false,
-					settings = {
-						typescript = {
-							inlayHints = {
-								includeInlayParameterNameHints = "literal",
-								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-								includeInlayFunctionParameterTypeHints = true,
-								includeInlayVariableTypeHints = false,
-								includeInlayPropertyDeclarationTypeHints = true,
-								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
-							},
-						},
-						javascript = {
-							inlayHints = {
-								includeInlayParameterNameHints = "all",
-								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-								includeInlayFunctionParameterTypeHints = true,
-								includeInlayVariableTypeHints = true,
-								includeInlayPropertyDeclarationTypeHints = true,
-								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
-							},
-						},
-					},
-				},
 				html = {},
 				yamlls = {
-					settings = {
-						yaml = {
-							keyOrdering = false,
-						},
-					},
+					settings = { yaml = { keyOrdering = false } },
 				},
-				lua_ls = {
-					single_file_support = true,
-					settings = {
-						Lua = {
-							workspace = {
-								checkThirdParty = false,
-							},
-							completion = {
-								workspaceWord = true,
-								callSnippet = "Both",
-							},
-							misc = {
-								parameters = {},
-							},
-							hint = {
-								enable = true,
-								setType = false,
-								paramType = true,
-								paramName = "Disable",
-								semicolon = "Disable",
-								arrayIndex = "Disable",
-							},
-							doc = {
-								privateName = { "^_" },
-							},
-							type = {
-								castNumberToInteger = true,
-							},
-							diagnostics = {
-								disable = { "incomplete-signature-doc", "trailing-space" },
-								groupSeverity = {
-									strong = "Warning",
-									strict = "Warning",
-								},
-								groupFileStatus = {
-									["ambiguity"] = "Opened",
-									["await"] = "Opened",
-									["codestyle"] = "None",
-									["duplicate"] = "Opened",
-									["global"] = "Opened",
-									["luadoc"] = "Opened",
-									["redefined"] = "Opened",
-									["strict"] = "Opened",
-									["strong"] = "Opened",
-									["type-check"] = "Opened",
-									["unbalanced"] = "Opened",
-									["unused"] = "Opened",
-								},
-								unusedLocalExclude = { "_*" },
-							},
-							format = {
-								enable = false,
-								defaultConfig = {
-									indent_style = "space",
-									indent_size = "2",
-									continuation_indent_size = "2",
-								},
-							},
-						},
+				pyright = {
+					-- Use the project's virtualenv when there is one
+					before_init = function(_, config)
+						local root = config.root_dir or vim.fn.getcwd()
+						for _, dir in ipairs({ ".venv", "venv", "env", "../.venv", "../../.venv" }) do
+							local python = root .. "/" .. dir .. "/bin/python"
+							if vim.fn.executable(python) == 1 then
+								config.settings.python = vim.tbl_deep_extend("force", config.settings.python or {}, {
+									pythonPath = python,
+								})
+								return
+							end
+						end
+					end,
+				},
+				-- ruff for formatting only; pyright handles diagnostics
+				ruff = {
+					init_options = { settings = { lint = { enable = false } } },
+				},
+			},
+		},
+	},
+
+	{
+		"stevearc/conform.nvim",
+		opts = { formatters_by_ft = { python = { "ruff_format" } } },
+	},
+
+	{
+		"mrcjkb/rustaceanvim",
+		opts = {
+			server = {
+				default_settings = {
+					["rust-analyzer"] = {
+						-- Don't run cargo check/clippy on every save; rely on
+						-- rust-analyzer's own (incl. experimental) diagnostics instead
+						checkOnSave = false,
+						diagnostics = { experimental = { enable = true } },
 					},
 				},
 			},
-			setup = {},
 		},
 	},
 }

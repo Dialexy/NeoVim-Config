@@ -1,47 +1,35 @@
 return {
-	-- Incremental rename
-	{
-		"smjonas/inc-rename.nvim",
-		cmd = "IncRename",
-		config = true,
-	},
-
 	-- Go forward/backward with square brackets
 	{
 		"nvim-mini/mini.bracketed",
 		event = "BufReadPost",
-		config = function()
-			local bracketed = require("mini.bracketed")
-			bracketed.setup({
-				file = { suffix = "" },
-				window = { suffix = "" },
-				quickfix = { suffix = "" },
-				yank = { suffix = "" },
-				treesitter = { suffix = "n" },
-			})
-		end,
+		opts = {
+			file = { suffix = "" },
+			window = { suffix = "" },
+			quickfix = { suffix = "" },
+			yank = { suffix = "" },
+			treesitter = { suffix = "n" },
+		},
 	},
 
-	-- Better increase/descrease
 	{
-		"monaqa/dial.nvim",
-    -- stylua: ignore
-    keys = {
-      { "<C-a>", function() return require("dial.map").inc_normal() end, expr = true, desc = "Increment" },
-      { "<C-x>", function() return require("dial.map").dec_normal() end, expr = true, desc = "Decrement" },
-    },
-		config = function()
-			local augend = require("dial.augend")
-			require("dial.config").augends:register_group({
-				default = {
-					augend.integer.alias.decimal,
-					augend.integer.alias.hex,
-					augend.date.alias["%Y/%m/%d"],
-					augend.constant.alias.bool,
-					augend.semver.alias.semver,
-					augend.constant.new({ elements = { "let", "const" } }),
+		"saghen/blink.cmp",
+		opts = {
+			keymap = {
+				preset = "enter",
+				["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+				["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+				["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
+			},
+			completion = {
+				menu = {
+					draw = {
+						columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
+					},
 				},
-			})
-		end,
+				documentation = { auto_show = true, auto_show_delay_ms = 500 },
+			},
+			signature = { enabled = true },
+		},
 	},
 }

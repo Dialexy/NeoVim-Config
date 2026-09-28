@@ -1,50 +1,34 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
-	vim.fn.system({
+	local out = vim.fn.system({
 		"git",
 		"clone",
 		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
 		"--branch=stable",
+		"https://github.com/folke/lazy.nvim.git",
 		lazypath,
 	})
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({ { "Failed to clone lazy.nvim:\n", "ErrorMsg" }, { out, "WarningMsg" } }, true, {})
+		vim.fn.getchar()
+		os.exit(1)
+	end
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- LazyVim extras live in lazyvim.json (manage them with :LazyExtras)
 require("lazy").setup({
 	spec = {
-		{
-			"LazyVim/LazyVim",
-			import = "lazyvim.plugins",
-			opts = {
-				colorscheme = "catppuccin",
-				news = {
-					lazyvim = true,
-					neovim = true,
-				},
-			},
-		},
-		-- import any extras modules here
-		{ import = "lazyvim.plugins.extras.linting.eslint" },
-		{ import = "lazyvim.plugins.extras.formatting.prettier" },
-		{ import = "lazyvim.plugins.extras.lang.typescript" },
-		{ import = "lazyvim.plugins.extras.lang.json" },
-		{ import = "lazyvim.plugins.extras.lang.tailwind" },
-		{ import = "lazyvim.plugins.extras.util.mini-hipatterns" },
+		{ "LazyVim/LazyVim", import = "lazyvim.plugins", opts = { colorscheme = "oxocarbon" } },
 		{ import = "plugins" },
 	},
 	defaults = {
 		lazy = false,
 		version = false,
 	},
-	dev = {
-		path = "~/.ghq/github.com",
-	},
+	install = { colorscheme = { "oxocarbon", "tokyonight" } },
 	checker = { enabled = false },
 	performance = {
-		cache = {
-			enabled = true,
-		},
 		rtp = {
 			disabled_plugins = {
 				"gzip",
@@ -57,12 +41,4 @@ require("lazy").setup({
 			},
 		},
 	},
-	ui = {
-		custom_keys = {
-			["<localleader>d"] = function(plugin)
-				dd(plugin)
-			end,
-		},
-	},
-	debug = false,
 })

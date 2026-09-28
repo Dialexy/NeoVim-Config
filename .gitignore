@@ -57,5 +57,5 @@ plugin/packer_compiled.lua
 # Lazy.nvim
 lazy-lock.json.bak
 
-#Claude 
+# Claude
 .claude/
