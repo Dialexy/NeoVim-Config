@@ -11,6 +11,9 @@ map("n", "sj", "<C-w>j", { desc = "Go to lower window" })
 map("n", "sk", "<C-w>k", { desc = "Go to upper window" })
 map("n", "sl", "<C-w>l", { desc = "Go to right window" })
 
+-- frees <leader>l for the Leet keys (<leader>lt / <leader>ls); open Lazy with :Lazy
+vim.keymap.del("n", "<leader>l")
+
 map("n", "<leader>ai", function()
 	Snacks.terminal.toggle("claude --continue 2>/dev/null || claude")
 end, { desc = "Toggle Claude Code" })
