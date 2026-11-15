@@ -1,3 +1,17 @@
+-- Snacks centres floats over the whole screen (statusline included) and puts
+-- odd leftover cells on one side; centre over the editor area with equal margins
+local function terminal_dim()
+	local tabline = (vim.o.showtabline == 2 or (vim.o.showtabline == 1 and #vim.api.nvim_list_tabpages() > 1)) and 1 or 0
+	local rows = vim.o.lines - vim.o.cmdheight - (vim.o.laststatus > 0 and 1 or 0) - tabline
+	local cols = vim.o.columns
+	-- outer size (border included), shrunk by 1 if needed so the leftover splits evenly
+	local h = math.floor(rows * 0.9)
+	h = h - (rows - h) % 2
+	local w = math.floor(cols * 0.9)
+	w = w - (cols - w) % 2
+	return { height = h - 2, width = w - 2, row = tabline + (rows - h) / 2, col = (cols - w) / 2 }
+end
+
 return {
 	-- messages, cmdline and the popupmenu
 	{
@@ -44,49 +58,13 @@ return {
 				},
 			}
 
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = "markdown",
-				callback = function(event)
-					vim.schedule(function()
-						require("noice.text.markdown").keys(event.buf)
-					end)
-				end,
-			})
-
 			opts.presets.lsp_doc_border = true
 		end,
-	},
-
-	{
-		"folke/snacks.nvim",
-		opts = {
-			scroll = { enabled = false },
-			terminal = {
-				win = {
-					position = "float",
-					width = 0.9,
-					height = 0.9,
-					row = 0.05,
-					col = 0.075,
-					border = "none",
-				},
-			},
-		},
-		keys = {
-			{
-				"<leader>ft",
-				function()
-					Snacks.terminal.toggle()
-				end,
-				desc = "Toggle Terminal",
-			},
-		},
 	},
 
 	-- buffer line
 	{
 		"akinsho/bufferline.nvim",
-		event = "VeryLazy",
 		keys = {
 			{ "<Tab>", "<Cmd>BufferLineCycleNext<CR>", desc = "Next tab" },
 			{ "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", desc = "Prev tab" },
@@ -101,46 +79,13 @@ return {
 		},
 	},
 
-	-- filename
-	{
-		"b0o/incline.nvim",
-		event = "BufReadPre",
-		config = function()
-			require("incline").setup({
-				highlight = {
-					groups = {
-						InclineNormal = { group = "PmenuSel", default = true },
-						InclineNormalNC = { group = "Pmenu", default = true },
-					},
-				},
-				window = { margin = { vertical = 0, horizontal = 1 } },
-				hide = {
-					cursorline = true,
-				},
-				render = function(props)
-					local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
-					if filename == "" then
-						filename = "[No Name]"
-					end
-					if vim.bo[props.buf].modified then
-						filename = "[+] " .. filename
-					end
-
-					-- Use mini.icons instead of nvim-web-devicons
-					local icon, hl = MiniIcons.get("file", filename)
-					local icon_color = vim.fn.synIDattr(vim.fn.hlID(hl), "fg")
-
-					return { { icon, guifg = icon_color }, { " " }, { filename } }
-				end,
-			})
-		end,
-	},
-
 	-- statusline
 	{
 		"nvim-lualine/lualine.nvim",
 		opts = function(_, opts)
 			local LazyVim = require("lazyvim.util")
+			-- keep showing the file while the floating terminal has focus
+			opts.options.ignore_focus = { "snacks_terminal" }
 			opts.sections.lualine_c[4] = {
 				LazyVim.lualine.pretty_path({
 					length = 0,
@@ -158,6 +103,28 @@ return {
 	{
 		"folke/snacks.nvim",
 		opts = {
+			scroll = { enabled = false },
+			terminal = {
+				win = {
+					position = "float",
+					width = function()
+						return terminal_dim().width
+					end,
+					height = function()
+						return terminal_dim().height
+					end,
+					row = function()
+						return terminal_dim().row
+					end,
+					col = function()
+						return terminal_dim().col
+					end,
+					border = "rounded",
+					-- with laststatus=3 the focused float's statusline is drawn, so reuse
+					-- the previous window's (see lualine's ignore_focus)
+					wo = { statusline = "%{%getwinvar(winnr('#'), '&statusline')%}" },
+				},
+			},
 			dashboard = {
 				preset = {
 					header = [[

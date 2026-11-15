@@ -1,7 +1,5 @@
 -- Only overrides of LazyVim's defaults live here:
 -- https://www.lazyvim.org/configuration/general#options
-require("config.remote_clipboard").setup()
-
 vim.g.lazyvim_picker = "telescope"
 vim.g.lazyvim_prettier_needs_config = true
 -- Format manually with <leader>cf, or toggle format-on-save with <leader>uf
@@ -19,8 +17,6 @@ opt.splitkeep = "cursor"
 opt.backupskip = { "/tmp/*", "/private/tmp/*" }
 opt.path:append({ "**" })
 opt.wildignore:append({ "*/node_modules/*" })
--- Continue comment leaders (e.g. `*` in block comments) on <Enter>
-opt.formatoptions:append({ "r" })
 
 vim.filetype.add({
 	extension = { mdx = "mdx" },

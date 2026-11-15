@@ -1,5 +1,5 @@
 _G.dd = function(...)
-	require("util.debug").dump(...)
+	Snacks.debug.inspect(...)
 end
 
 require("config.lazy")

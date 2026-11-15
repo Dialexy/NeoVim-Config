@@ -17,3 +17,13 @@ vim.keymap.del("n", "<leader>l")
 map("n", "<leader>ai", function()
 	Snacks.terminal.toggle("claude --continue 2>/dev/null || claude")
 end, { desc = "Toggle Claude Code" })
+
+-- One terminal for both keys, opened in nvim's cwd; LazyVim's defaults use
+-- different cwds, which Snacks treats as separate terminals
+local function toggle_terminal()
+	Snacks.terminal.toggle()
+end
+vim.keymap.del("n", "<leader>ft")
+vim.keymap.del("n", "<leader>fT")
+map({ "n", "t" }, "<c-/>", toggle_terminal, { desc = "Toggle Terminal" })
+map({ "n", "t" }, "<c-_>", toggle_terminal, { desc = "which_key_ignore" })

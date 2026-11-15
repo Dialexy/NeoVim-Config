@@ -1,10 +1,5 @@
 return {
 	{
-		"mason-org/mason.nvim",
-		opts = { ensure_installed = { "stylua", "shellcheck", "shfmt" } },
-	},
-
-	{
 		"neovim/nvim-lspconfig",
 		opts = {
 			inlay_hints = { enabled = false }, -- toggle with <leader>uh
@@ -18,14 +13,13 @@ return {
 					-- Use the project's virtualenv when there is one
 					before_init = function(_, config)
 						local root = config.root_dir or vim.fn.getcwd()
-						for _, dir in ipairs({ ".venv", "venv", "env", "../.venv", "../../.venv" }) do
-							local python = root .. "/" .. dir .. "/bin/python"
-							if vim.fn.executable(python) == 1 then
-								config.settings.python = vim.tbl_deep_extend("force", config.settings.python or {}, {
-									pythonPath = python,
-								})
-								return
-							end
+						-- search upward so nested dirs (e.g. ML/Kaggle/examples/x) find ML/.venv
+						local venv = vim.fs.find({ ".venv", "venv", "env" }, { path = root, upward = true, type = "directory" })[1]
+						local python = venv and venv .. "/bin/python"
+						if python and vim.fn.executable(python) == 1 then
+							config.settings.python = vim.tbl_deep_extend("force", config.settings.python or {}, {
+								pythonPath = python,
+							})
 						end
 					end,
 				},

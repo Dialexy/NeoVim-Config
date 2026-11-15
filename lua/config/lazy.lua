@@ -19,7 +19,7 @@ vim.opt.rtp:prepend(lazypath)
 -- LazyVim extras live in lazyvim.json (manage them with :LazyExtras)
 require("lazy").setup({
 	spec = {
-		{ "LazyVim/LazyVim", import = "lazyvim.plugins", opts = { colorscheme = "oxocarbon" } },
+		{ "LazyVim/LazyVim", import = "lazyvim.plugins" },
 		{ import = "plugins" },
 	},
 	defaults = {

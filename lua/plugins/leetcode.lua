@@ -7,12 +7,6 @@ return {
 		"nvim-lua/plenary.nvim",
 		"MunifTanjim/nui.nvim",
 	},
-	init = function()
-		vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged", "BufLeave", "QuitPre", "FocusLost" }, {
-			pattern = vim.fn.stdpath("data") .. "/leetcode/*",
-			command = "silent! update",
-		})
-	end,
 	opts = {
 		lang = "python3",
 		editor = { reset_previous_code = false },
@@ -37,7 +31,7 @@ return {
 					end
 					for _, buf in ipairs({ q.bufnr, q.description.bufnr }) do
 						vim.keymap.set("n", "<leader>bb", swap, { buffer = buf, desc = "Swap code/description" })
-						-- buffer-local, so <leader>l still opens Lazy everywhere else
+						-- buffer-local, so these only exist in Leet buffers
 						vim.keymap.set("n", "<leader>lt", "<cmd>Leet test<cr>", { buffer = buf, desc = "Leet test" })
 						vim.keymap.set("n", "<leader>ls", "<cmd>Leet submit<cr>", { buffer = buf, desc = "Leet submit" })
 						-- which-key caches buffer keymaps; without this it still sees <leader>l as just Lazy

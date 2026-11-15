@@ -28,23 +28,20 @@ Plugins, treesitter parsers and Mason tools install on first launch.
 ├── lazy-lock.json        # Plugin version lock file
 └── lua/
     ├── config/
-    │   ├── autocmds.lua          # Autosave, conceal overrides
-    │   ├── keymaps.lua           # Personal keymaps
-    │   ├── lazy.lua              # lazy.nvim bootstrap
-    │   ├── options.lua           # Overrides of LazyVim's options
-    │   └── remote_clipboard.lua  # OSC 52 clipboard over SSH/tmux
-    ├── plugins/
-    │   ├── coding.lua        # blink.cmp, mini.bracketed
-    │   ├── colorscheme.lua   # Oxocarbon (transparent), Catppuccin
-    │   ├── editor.lua        # Telescope + file browser, highlight-colors, close-buffers
-    │   ├── gitsigns.lua
-    │   ├── leetcode.lua      # :Leet
-    │   ├── lsp.lua           # Extra servers, pyright venv detection, ruff formatting, rust-analyzer
-    │   ├── performance.lua
-    │   ├── treesitter.lua    # Extra parsers
-    │   └── ui.lua            # noice, snacks, bufferline, incline, lualine
-    └── util/
-        └── debug.lua         # dd() debug helper
+    │   ├── autocmds.lua      # Autosave, terminal mouse
+    │   ├── keymaps.lua       # Personal keymaps
+    │   ├── lazy.lua          # lazy.nvim bootstrap
+    │   └── options.lua       # Overrides of LazyVim's options
+    └── plugins/
+        ├── coding.lua        # blink.cmp, mini.bracketed
+        ├── colorscheme.lua   # Oxocarbon, Ayu, Catppuccin; transparency, last theme restored on launch
+        ├── editor.lua        # Telescope + file browser, highlight-colors, close-buffers
+        ├── gitsigns.lua
+        ├── leetcode.lua      # :Leet
+        ├── lsp.lua           # Extra servers, pyright venv detection, ruff formatting, rust-analyzer
+        ├── multicursor.lua
+        ├── treesitter.lua    # Extra parsers
+        └── ui.lua            # noice, snacks (floating terminal, dashboard), bufferline, lualine
 ```
 
 ## Languages
@@ -68,7 +65,7 @@ Leader is `Space`. Everything from [LazyVim's keymaps](https://www.lazyvim.org/k
 | `\\` | Buffers |
 | `<Tab>` / `<S-Tab>` | Next / previous tab |
 | `<leader>th` / `<leader>tu` | Close hidden / nameless buffers |
-| `<leader>ft` | Floating terminal |
+| `<C-/>` | Toggle floating terminal (works from inside it too) |
 | `<leader>ai` | Toggle Claude Code (double `<Esc>` leaves terminal mode) |
 
 ## Notes
@@ -76,8 +73,8 @@ Leader is `Space`. Everything from [LazyVim's keymaps](https://www.lazyvim.org/k
 - Format-on-save is off; format with `<leader>cf` or toggle with `<leader>uf`.
 - Inlay hints are off; toggle with `<leader>uh`.
 - Modified buffers autosave on leaving insert mode, after normal-mode edits, and on buffer switch/focus loss.
-- Mouse is disabled.
-- Switch colorscheme with `<leader>uC`.
+- Mouse is disabled, except in the terminal so the wheel scrolls its output.
+- Switch colorscheme with `<leader>uC`; every theme is transparent and the last pick loads on next launch.
 
 ## Credits
 

@@ -1,12 +1,3 @@
--- LazyVim defaults conceallevel to 2; show raw markup in these formats
-vim.api.nvim_create_autocmd("FileType", {
-	group = vim.api.nvim_create_augroup("user_no_conceal", { clear = true }),
-	pattern = { "json", "jsonc", "markdown" },
-	callback = function()
-		vim.opt_local.conceallevel = 0
-	end,
-})
-
 -- Autosave modified file buffers when leaving insert mode, after normal-mode
 -- edits, and when switching buffers or losing focus
 vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged", "BufLeave", "FocusLost" }, {
@@ -25,5 +16,14 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged", "BufLeave", "FocusLo
 				vim.cmd("silent! update")
 			end)
 		end
+	end,
+})
+
+-- Mouse stays off (options.lua) except in terminals, so the wheel scrolls
+-- scrollback instead of kitty sending it to the shell as arrow keys
+vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter", "TermOpen" }, {
+	group = vim.api.nvim_create_augroup("user_terminal_mouse", { clear = true }),
+	callback = function()
+		vim.o.mouse = vim.bo.buftype == "terminal" and "a" or ""
 	end,
 })
